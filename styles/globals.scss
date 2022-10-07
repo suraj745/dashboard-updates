@@ -8,14 +8,42 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: 62.5%;
-  body {
-    font-size: 1.5rem;
+body {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
-    ul {
-      padding: 0;
+    li {
       list-style: none;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+  }
+}
+.country-select {
+  width: 100%;
+  &.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border: 0.1px solid silver;
+    // padding-block: 1.2rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    border-radius: 0.4rem;
+  }
+}
+
+// .custom-select {
+//   .ant-radio-button-wrapper:hover {
+//     background-color: linear-gradient("#ff9b44", "#fc6273") !important;
+//     color: white;
+//   }
+// }
+
+.accordion {
+  &.ant-collapse {
+    background-color: transparent !important;
   }
 }

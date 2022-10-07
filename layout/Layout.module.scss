@@ -1,0 +1,17 @@
+@import "/styles/function";
+
+.layout_container {
+  min-height: 100vh;
+}
+
+.main_container {
+  min-height: calc(100vh - 7rem);
+  .sidebar {
+    border-right: 0.1rem solid silver;
+    flex: 1;
+  }
+
+  .main {
+    flex: 3;
+  }
+}

@@ -1,5 +1,7 @@
 @import "/node_modules/include-media/dist/include-media";
 
+$green: #00d25b;
+$hover_green: #00ac4a;
 @mixin flex($horizontal, $vertical) {
   display: flex;
   justify-content: $horizontal;

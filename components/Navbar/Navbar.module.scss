@@ -1,0 +1,48 @@
+@import "/styles/function";
+
+.navbar_container {
+  @include flex(space-between, center);
+  min-height: 7rem;
+
+  .navbar_left {
+    flex: 1;
+  }
+
+  .navbar_right {
+    flex: 3;
+
+    @include flex(flex-start, center);
+    gap: clamp(2rem, 4vw, 4rem);
+
+    .searchbar {
+      width: min(50%, 50vw);
+      & > input {
+        background: none;
+        border: none;
+        outline: none;
+        width: 100%;
+        padding: 0.5rem;
+        border: 0.1rem solid silver;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+
+  .create_project {
+    background: none;
+    border: none;
+    outline: none;
+    background-color: $green;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    @include flex(center, center);
+    transition: 0.4s;
+    gap: 0.5rem;
+
+    &:hover {
+      background: $hover_green;
+    }
+  }
+}

@@ -2,10 +2,8 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <section>
-      <nav></nav>
+    <section className={`container-fluid`}>
       <main>{children}</main>
-      <footer></footer>
     </section>
   );
 };
