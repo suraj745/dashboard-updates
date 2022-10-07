@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import SelectCountry from "./SelectCountry";
+import { useForm } from "react-hook-form";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -17,14 +18,8 @@ const BasicInformation = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
+  const [country, setCountry] = useState(null);
+  const [fileList, setFileList] = useState([]);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -54,9 +49,34 @@ const BasicInformation = () => {
       </div>
     </div>
   );
+
+  // form
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  //
+
+  console.log(fileList);
+
+  const onSubmit = (data) => {
+    const data2 = {
+      type: "BASIC INFORMATION",
+      ...data,
+      country,
+      image: fileList.length > 0 ? fileList[0].thumbUrl : "",
+    };
+
+    console.log(data2);
+  };
+
   return (
     <section className="container">
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <section className="row flex-column">
           <div class="col-sm-6">
             <h5>Profile Image/Business Logo</h5>
@@ -68,7 +88,7 @@ const BasicInformation = () => {
               onPreview={handlePreview}
               onChange={handleChange}
             >
-              {fileList.length >= 8 ? null : uploadButton}
+              {fileList.length > 0 ? null : uploadButton}
             </Upload>
             <Modal
               open={previewOpen}
@@ -94,6 +114,7 @@ const BasicInformation = () => {
               class="form-control"
               id="exampleInputPassword1"
               placeholder="  Business Name"
+              {...register("businessName")}
             />
           </div>
           <br />
@@ -109,6 +130,7 @@ const BasicInformation = () => {
               id="exampleInputPassword1"
               placeholder="Brand or Alias Name
               "
+              {...register("brandName")}
             />
           </div>
           <br />
@@ -116,14 +138,14 @@ const BasicInformation = () => {
           <div class="col-sm-6">
             <label for="exampleInputPassword1" class="form-label">
               Country <span className="text-danger">*</span>
-            </label>{" "}
+            </label>
             <br />
-            <SelectCountry />
+            <SelectCountry register={(e) => setCountry(e)} />
           </div>
 
           <br />
           <section className="row gap-3 mx-1">
-            <span class="col-sm-2 mt-3 btn btn-primary">Submit</span>
+            <button class="col-sm-2 mt-3 btn btn-primary">Submit</button>
             <span class="col-sm-2  mt-3 btn btn-danger">Reset</span>
           </section>
         </section>

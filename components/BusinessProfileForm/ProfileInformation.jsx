@@ -10,6 +10,7 @@ import {
   Radio,
 } from "antd";
 import moment from "moment";
+import { useForm } from "react-hook-form";
 
 const { Option } = Select;
 const children = [];
@@ -34,33 +35,55 @@ const handleChange = (value) => {
 };
 
 const ProfileInformation = () => {
+  const [form, setForm] = useState({
+    profileUrl: "",
+    BusinessDate: "",
+    BusinessCategory: "",
+  });
   const [individual, setIndividual] = useState(true);
   const time = new Date();
 
   const [size, setSize] = useState("middle");
 
+  const monthFormat = "YYYY/MM";
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const handleSizeChange = (e) => {
     setSize(e.target.value);
   };
 
+  const onSubmit = (data) => {
+    const data2 = { ...data, profileUrl: "1" };
+
+    console.log(data2);
+  };
   return (
     <section className="container">
-      <form>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-3">
+          <label for="exampleInputEmail1" className="form-label">
             <h5> What describes you best?</h5>
           </label>
           <br />
           <Radio.Group
-            defaultValue="Individual/Freelancer"
+            // defaultValue="Individual/Freelancer"
             buttonStyle="solid"
             className="custom-select"
+            defaultValue={"Individual/Freelance"}
+            onChange={(e) => {
+              console.log("date", e.target.value);
+            }}
           >
             <Radio.Button
-              value="Individual/Freelancer"
               onClick={() => {
                 setIndividual(true);
               }}
+              value="Individual/Freelance"
             >
               Individual/Freelancer
             </Radio.Button>
@@ -68,8 +91,7 @@ const ProfileInformation = () => {
               onClick={() => {
                 setIndividual(false);
               }}
-              value="Team/Agency/Company
-"
+              value="Team/Agency/Company"
             >
               Team/Agency/Company
             </Radio.Button>
@@ -77,13 +99,14 @@ const ProfileInformation = () => {
         </div>
 
         {!individual && (
-          <div class="col-md-6">
-            <label for="exampleInputEmail1" class="form-label">
+          <div className="col-md-6">
+            <label for="exampleInputEmail1" className="form-label">
               Team Size <span className="text-danger">*</span>
             </label>
             <input
+              {...register("teamSize")}
               type={`number`}
-              class="form-control"
+              className="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Number of people working in your company"
@@ -92,43 +115,50 @@ const ProfileInformation = () => {
         )}
         <br />
 
-        <div class="col-md-6">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="col-md-6">
+          <label for="exampleInputEmail1" className="form-label">
             Set your Profile URL <span className="text-danger">*</span>
-            <div class="form-text">
+            <div className="form-text">
               Set a URL for your new profile. Help people find you online.
             </div>
           </label>
 
-          <Input addonBefore="https://www.refrens.com" defaultValue="mysite" />
+          <Input
+            onChange={(e) => {
+              console.log(e.target.value);
+            }}
+            addonBefore="https://www.refrens.com"
+          />
         </div>
         <br />
 
-        <div class="col-md-6">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="col-md-6">
+          <label for="exampleInputEmail1" className="form-label">
             In Business Since
-            <div class="form-text">
+            <div className="form-text">
               Month and Year of when you started the business
             </div>
           </label>
 
           <DatePicker
-            defaultValue={moment("2022/01", "YYYY / MM")}
-            format={"YYYY / MM"}
+            defaultValue={moment("2021/01", monthFormat)}
+            format={monthFormat}
             picker="month"
+            {...register("yearn/month")}
           />
         </div>
 
         <br />
 
-        <div class="col-md-6">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="col-md-6">
+          <label for="exampleInputEmail1" className="form-label">
             Your Business Category
-            <div class="form-text">
+            <div className="form-text">
               Month and Year of when you started the business
             </div>
           </label>
           <Select
+            {...register("businessCategory")}
             mode="multiple"
             size={size}
             placeholder="Please select"
@@ -145,13 +175,9 @@ const ProfileInformation = () => {
         <br />
 
         <section className="row gap-3">
-          <span type="submit" class="btn btn-primary col-sm-4">
-            Save & Continue
-          </span>
+          <button className="btn btn-primary col-sm-4">Save & Continue</button>
 
-          <button type={"reset"} class="btn btn-danger col-sm-4 ">
-            Reset
-          </button>
+          <button className="btn btn-danger col-sm-4 ">Reset</button>
         </section>
       </form>
     </section>
