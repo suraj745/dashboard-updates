@@ -5,9 +5,9 @@ import { AiOutlinePlus, AiFillAppstore } from "react-icons/ai";
 const Navbar = () => {
   return (
     <section className={`${styles.navbar_container}  `}>
-      <section className={styles.navbar_left}>
+      <uk className={styles.navbar_left}>
         <h1>Agumentik</h1>
-      </section>
+      </uk>
 
       <ul className={styles.navbar_right}>
         <li>
